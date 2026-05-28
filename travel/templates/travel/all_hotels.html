@@ -1,0 +1,208 @@
+{% extends 'travel/base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+   
+    .all-hotels .top h2 {
+        font-size: 38px;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    .all-hotels .top {
+        text-align: center;
+    width: 70%;
+    margin: auto;
+    }
+    .all-hotels .top p{
+        font-size: 18px;
+    color: black;
+    font-weight: 500;
+    margin-bottom: 40px;
+    }
+    .all-hotels {
+        padding: 20px;
+    }
+
+    .hotels-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+        padding-top: 40px;
+    }
+
+    .hotel-card {
+        background-color: #2a2d3e;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hotel-card:hover {
+        transform: scale(1.05);
+    }
+
+    .hotel-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .hotel-card h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 15px;
+        color: #ffffff;
+    }
+
+    .hotel-card p {
+        font-size: 14px;
+        color: #a5a6c4;
+        margin: 0 15px 15px;
+    }
+
+    .hotel-footer  {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 15px 15px;
+        font-size: 14px;
+        color: #ffffff;
+    }
+    .hotel-footer p{
+        color: white;
+    }
+
+    .details-button {
+        display: inline-block;
+        margin: 0 15px 15px;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #4a4b5f;
+        border-radius: 10px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .details-button:hover {
+        background-color: #5b5d73;
+    }
+</style>
+
+
+<section id="bg-more">
+    <section class="wrapper">
+        <section class="container">
+            <h1>MORE HOTELS</h1>
+        </section>
+    </section>
+</section>
+
+<section class="all-hotels">
+    
+    <div class="hotels-grid">
+        {% for hotel in hotels %}
+        <div class="hotel-card">
+            <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+            <h3>{{ hotel.name }}</h3>
+            <p>{{ hotel.short_description|truncatewords:15 }}</p>
+            <div class="hotel-footer">
+                <p>Rating: ★ {{ hotel.rating }}</p>
+                <p>Price: ${{ hotel.price_per_person }}</p>
+            </div>
+            <a href="{% url 'hotel_detail' hotel.id %}" class="details-button">More Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+<section id="footer">
+    <img src="{% static 'travel/images/curve.svg' %}" alt="" class="curve">
+    <section class="wrapper">
+      <section class="content">
+        <section class="top">
+          <div class="item">
+              <h3>Travelers</h3>
+              <ul>
+                  <li><a href="">Blog</a></li>
+                  <li><a href="">About Us</a></li>
+                  <li><a href="">Whats New</a></li>
+              </ul>
+          </div>
+          <div class="item">
+              <h3>Resources</h3>
+              <ul>
+                  <li><a href="">Technical support</a></li>
+                  <li><a href="">FAQ</a></li>
+                  <li><a href="">Plans & pricing</a></li>
+                  <li><a href="">What is planing</a></li>
+              </ul>
+          </div>
+          <div class="item large">
+              <h3>Connect with us</h3>
+              <p>Sign up for our articles and resources:</p>
+              <form action="">
+                  <input type="email" placeholder="Your Email" />
+                  <input type="submit" placeholder="Subscribe" />
+              </form>
+              <div class="social">
+                  <p>Connect with Travelers</p>
+                  <ul>
+                      <li><a href=""><img src="{% static 'travel/images/facebook-badge.svg' %}" alt=""></a></li>
+                      <li><a href=""><img src="{% static 'travel/images/twitter.svg' %}" alt=""></a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="pack">
+            <h3>Log in as a packager</h3>
+            <p>If you are a packager login with this</p>
+            <a href="#" class="btn-for-pkg">Sign Up</a>
+          </div>
+      </section>
+      <section class="bottom">
+          <div class="left">
+              <div class="top">
+                  <h1 class="left">
+                      <a href=""><img src="{% static 'travel/images/touring.png' %}" alt=""></a>
+                  </h1>
+                  <ul>
+                     <li><a href="">Privacy policy</a></li>
+                     <li><a href="">Terms of use</a></li>
+                     <li><a href="">Trust & security</a></li>
+                  </ul>
+                  <p>Copyright &copy; 2020</p>
+              </div>
+              <div class="bottom">
+                  <form action="">
+                  <select name="" id="">
+                      <option value="" disabled="">choose your language</option>
+                      <option value="en">English</option>
+                      <option value="fr">French</option>
+                      <option value="ar">Arabic</option>
+                  </select>
+                  </form>
+              </div>
+          </div>
+          <div class="right">
+              <a href="" class="button">View all plans <img src="{% static 'travel/images/right-arrow.svg' %}" alt=""></a>
+          </div>
+      </section>
+      </section>
+    </section>
+  </section>    
+
+
+
+
+
+{% endblock %}

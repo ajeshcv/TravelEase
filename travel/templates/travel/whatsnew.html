@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <header>
+        <h1>What's New in Travel</h1>
+    </header>
+    
+    <section class="updates">
+        <div class="update-card">
+            <h2>🌍 New Destinations Added</h2>
+            <p>Explore the latest travel hotspots, including Bali, Santorini, and Iceland.</p>
+        </div>
+        <div class="update-card">
+            <h2>💰 Special Discounts</h2>
+            <p>Get up to 30% off on selected holiday packages. Limited-time offer!</p>
+        </div>
+        <div class="update-card">
+            <h2>⭐ User Reviews & Stories</h2>
+            <p>Check out the amazing experiences shared by our travelers.</p>
+        </div>
+        <div class="update-card">
+            <h2>🚀 New Website Features</h2>
+            <p>We've added a smoother booking experience and new search filters.</p>
+        </div>
+    </section>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+    .updates {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .update-card {
+        background: white;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+</style>

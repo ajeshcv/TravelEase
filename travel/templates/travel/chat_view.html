@@ -1,0 +1,148 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+</head>
+
+<style>
+   
+.chat-container {
+    width: 80%; 
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: scroll; 
+    max-height: 400px;
+}
+.message {
+    padding: 15px 20px; 
+    margin-bottom: 15px;
+    border-radius: 20px; 
+    max-width: 75%;
+    clear: both;
+    font-size: 16px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    position: relative;
+    word-wrap: break-word; 
+}
+
+.sent {
+    background-color: #dcf8c6; 
+    float: right;
+    text-align: left; 
+    margin-left: 25%; 
+}
+
+.received {
+    background-color: #fff; 
+    float: left;
+    text-align: left;
+    margin-right: 25%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+.message::before { 
+    content: "";
+    position: absolute;
+    border-style: solid;
+}
+
+.sent::before {
+    left: auto;
+    right: -10px; 
+    top: 10px; 
+    border-width: 10px 0 10px 10px; 
+    border-color: transparent transparent transparent #dcf8c6; 
+}
+
+.received::before {
+    left: -10px;
+    top: 10px; 
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #fff transparent transparent; 
+}
+
+
+.timestamp {
+    font-size: 0.8em;
+    color: #757575;
+    margin-top: 5px;
+    display: block; 
+    clear: both; 
+}form {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form textarea {
+    flex-grow: 1;
+    padding: 10px; 
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    resize: none;
+    font-size: 14px; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: 40px;
+}
+
+form button {
+    margin-left: 10px;
+    padding: 10px 15px; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    height: 40px; 
+    line-height: 1;
+}
+
+
+a.back-to-profile {
+    display: block; 
+    margin: 20px auto; 
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: fit-content; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a.back-to-profile:hover {
+    background-color: #0056b3; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); 
+}
+</style>
+
+<h2 style="text-align: center;">Chat with {{ other_user.username }}</h2>
+<div class="chat-container">
+    {% for message in messages %}
+        <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+            <p>{{ message.message }}</p>
+            <span class="timestamp">{{ message.timestamp }}</span>
+        </div>
+    {% endfor %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="message" placeholder="Type a message"></textarea> <button type="submit">Send</button>
+</form>
+<a href="{% if user.user_type == 'packager' %}{% url 'packager_dashboard' %}{% else %}{% url 'user_profile' %}{% endif %}" class="back-to-profile">Back to {% if user.user_type == 'packager' %}Dashboard{% else %}Profile{% endif %}</a>

@@ -1,0 +1,73 @@
+{% block content %}
+<div class="booking-page">
+    <h2>Book {{ package.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-one">Confirm Booking</button>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+.booking-page {
+    width: 50%;
+    margin: 30px auto; 
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.booking-page h2 {
+    text-align: center;
+    margin-bottom: 25px; 
+    color: #333;
+    font-weight: 600; 
+}
+
+.booking-page label {
+    display: block;
+    margin-bottom: 8px; 
+    font-weight: 500;
+    color: #333;
+}
+
+.booking-page input,
+.booking-page textarea,
+.booking-page select { 
+    width: 100%;
+    padding: 12px; 
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px; 
+    transition: border-color 0.3s ease; 
+}
+
+.booking-page input:focus,
+.booking-page textarea:focus,
+.booking-page select:focus {
+    border-color: #007bff; 
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2); 
+}
+
+.btn-one {  
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-one:hover {
+    background-color: #0056b3;
+}
+
+</style>

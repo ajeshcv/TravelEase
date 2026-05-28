@@ -1,0 +1,427 @@
+{% extends 'travel/base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Spotlight Section -->
+<section id="spotlight">
+    <section class="wrapper">
+        <section class="container">
+            <h1>EXPLORE THE <br> WORLD WITH US</h1>
+            <p>Our travel platform bridges the gap between travelers and packagers, making trip planning effortless 
+                and enjoyable. Whether you're a traveler seeking the perfect destination or a packager showcasing exclusive deals, our all-in-one solution simplifies booking, managing,
+                 and exploring travel options. </p>
+            <div class="buttons">
+                <a href="{% url 'about_us' %}" class="btn-register">Know More</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'all_packages' %}" class="btn-booknow">Book Now</a>
+                {% else %}
+                <a href="{% url 'login' %}?next={% url 'all_packages' %}" class="btn-booknow">Book Now</a>
+                {% endif %}
+            </div>
+        </section>
+    </section>
+</section>
+
+
+<!-- Places Section -->
+<section id="places">
+    <section class="wrapper">
+        <section class="container">
+            <div class="content">
+                <h2>POPULAR DESTINATIONS</h2>
+                <p>Top destinations such as Paris, Tokyo, and New York boast iconic sights, diverse cultures, lively atmospheres, and memorable experiences for every traveler.</p>
+            </div>
+            <div class="details">
+                <ul>
+                    {% for place in places %}
+                     <li>
+                        <a href="{% url 'place_detail' place.id %}">
+                            <img class="place-img" src="{{ place.image.url }}" alt="{{ place.name }}" />
+                            <div class="bg">
+                                <h4>{{ place.short_description }}</h4>
+                                <h2>{{ place.name }}</h2>
+                                <p>{{ place.description|truncatewords:12 }}</p>
+                                <a href="{% url 'place_detail' place.id %}" class="button">Know more</a>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <small>
+                    <a href="{% url 'all_places' %}" class="more">More Destinations</a>
+                </small>
+            </div>
+        </section>
+    </section>
+</section>
+
+
+<!-- Packages Section -->
+<section class="packages">
+    <div class="top">
+        <h2>POPULAR PACKAGES</h2>
+        <p>Popular Packages offer an expertly curated selection of travel experiences that cater to a variety of interests and preferences, providing exceptional value and unforgettable adventures. </p>
+    </div>
+    <div class="package-grid">
+        {% for package in packages %}
+        <div class="package-card">
+            <div class="card-inner">
+                <!-- Front Side -->
+                <div class="card-front">
+                    <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
+                    <h3>{{ package.name|upper }}</h3>
+                    <p>{{ package.description|truncatewords:36}}</p>
+                </div>
+                <!-- Back Side -->
+                <div class="card-back">
+                    <h4>Discover More</h4>
+                      <p class="price">Price: <span>&#8377; {{package.price}}</span> per person</p>
+                      <div class="reviews">
+                          <i class="icon-star"></i> 4.5 (120 reviews)
+                      </div>
+                      <ul class="back-details-list">
+                          <li><i class="fa fa-star checked"></i> Stunning views</li>
+                          <li><i class="fa fa-star checked"></i> Cultural experiences</li>
+                          <li><i class="fa fa-star checked"></i> Luxury accommodations</li>
+                          <li><i class="fa fa-star checked"></i> Guided tours available</li>
+                      </ul>
+                      {% if user.is_authenticated %}
+                      <a href="/packages/{{ package.id }}/" class="btn">Know More</a>
+                     {% else %}
+                      <a href="{% url 'login' %}?next=/packages/{{ package.id }}/" class="btn">Know More</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <small>
+        {% if user.is_authenticated %}
+                <a href="{% url 'all_packages' %}" class="more">MORE PACKAGES</a>
+                {% else %}
+                <a href="{% url 'login' %}?next={% url 'all_packages' %}" class="more">MORE PACKAGES</a>
+                {% endif %}
+    </small>
+</section>
+
+
+<!-- Packagers Section -->
+<section class="packagers">
+    <div class="top">
+        <h2>OUR FEATURED PACAKAGERS</h2>
+    <p>Meet our top-rated packagers, offering exclusive deals, expertly curated trips, and unforgettable travel experiences tailored just for you.</p>
+    </div>
+    
+<div class="packagers">
+    <div class="packager-grid">
+        {% for packager in packagers %}
+        <div class="packager-card">
+            <img src="{{ packager.profile_image.url }}" alt="{{ packager.name }}">
+            <h3>{{ packager.name }}</h3>
+            <h5 style="font-size: 15px;">Contact: <span style="color: blue;">{{ packager.phone_number }}</span></h5>
+            <p>{{ packager.other_details|truncatewords:20 }}</p>
+            <div class="button-container">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'packager_detail' packager.id %}" class="btn">View Details</a>
+                    <a style="margin-left: 18px;" href="{% url 'start_chat' packager.id %}" class="btn">Chat {{ packager.name }}</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'packager_detail' packager.id %}" class="btn">View Details</a>
+                    <a style="margin-left: 18px;" href="{% url 'login' %}?next={% url 'start_chat' packager.id %}" class="btn">Chat {{ packager.name }}</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<small>
+    {% if user.is_authenticated %}
+        <a href="{% url 'all_packagers' %}" class="more">All Packagers</a>
+    {% else %}
+        <a href="{% url 'login' %}?next={% url 'all_packagers' %}" class="more">All Packagers</a>
+    {% endif %}
+</small>
+</section>
+
+
+<!-- why Section -->
+<section id="why">
+    <section class="wrapper">
+      <section class="content">
+       <div class="left">
+        <h2>Why Use Our Platform</h2>
+        <p>Use our platform for a seamless travel experience where travelers discover personalized packages, and packagers showcase their best deals. With real-time bookings, secure payments, and a user-friendly interface, we connect adventurers with trusted providers, ensuring hassle-free planning, exclusive offers, and unforgettable journeys—all in one place.</p>
+           <a href="{% url 'about_us' %}">Know more</a>
+       </div>
+       <div class="right">
+        <img src="{% static 'travel/images/logo.png' %}" alt="">
+       </div>
+      </section>
+    </section>
+</section>
+
+
+
+<!-- review Section -->
+<section id="reviews">
+    <div class="top">
+        <h2>OUR CUSTOMERS REVIEWS</h2>
+    <p>Hear from our happy travelers! Read authentic reviews and experiences shared by our customers about their unforgettable journeys.</p>
+    </div>
+    <div class="reviews-section">
+        <!-- Left Side: User Boxes -->
+        <div class="user-list">
+            {% for review in reviews %}
+            <div 
+                class="user-box{% if forloop.first %} active{% endif %}" 
+                data-user-id="user-{{ forloop.counter }}">
+                <img 
+                    src="{{ review.user.customer_profile.profile_image.url }}" 
+                    alt="{{ review.user.customer_profile.name }}" 
+                    class="profile-image"
+                    onerror="this.src='/static/images/default_profile.jpg'" />
+                <div class="user-details">
+                    <h3>{{ review.user.customer_profile.name }}</h3>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Right Side: Review Details -->
+        <div class="review-details">
+            {% for review in reviews %}
+            <div 
+                class="review-content{% if forloop.first %} active{% endif %}" 
+                id="user-{{ forloop.counter }}">
+                <p class="review-text">{{ review.text }}</p>
+                <p class="review-date">{{ review.created_at|date:"F j, Y" }}</p>
+                <p class="review-rating">Rating: {{ review.rating }} / 5</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <small>
+        <a href="{% url 'all_reviews' %}" class="more">All Reviews</a>
+    </small>
+</section>
+
+
+<!-- More Section -->
+<section id="parallax" >
+    <section class="wrapper">
+      <section class="content">
+        <div class="left">
+          <h4 style=" text-transform: uppercase;">Unforgettable Journeys Await You</h4>
+          <h2 style=" text-transform: uppercase;" >Adventure Awaits, Just a Click Away
+            Explore Unique Destinations Around the Globe </h2>
+          <p>With our platform, your next unforgettable adventure is just a click away.
+            Explore a world of exciting destinations, book with ease, and let us take care of the rest for a seamless travel experience.</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'all_packages' %}" class="book">Book Now</a>
+        {% else %}
+            <a href="{% url 'login' %}?next={% url 'all_packages' %}" class="book">Book Now</a>
+        {% endif %}
+        </div>
+        <div class="right">
+          
+        </div>
+      </section>
+    </section>
+</section>
+
+
+<!-- Hotels Section -->
+<section id="hotels">
+    <div class="top">
+        <h2>TOP HOTELS</h2>
+    <p>Explore our selection of top hotels, offering luxurious stays, exceptional service, and unbeatable locations for an unforgettable travel experience.</p>
+    </div>
+    <div class="hotels-grid">
+        {% for hotel in hotels %}
+        <div class="hotel-card">
+           
+            <div class="left">
+                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+            </div>
+           
+            <div class="middle">
+                <h3>{{ hotel.name }}</h3>
+                <p>{{ hotel.short_description }}</p>
+            </div>
+        
+            <div class="right">
+                <div class="price">Price: ${{ hotel.price_per_person }}/person</div>
+                <a href="{% url 'hotel_detail' hotel.id %}" class="details-button">Know More</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <small>
+        <a href="{% url 'all_hotels' %}" class="more">All Hotels</a>
+    </small>
+</section>
+
+
+<!-- Status Section -->
+<section id="statusbarbg">
+    <section class="wrapper">
+      <section class="content">
+        <div class="top">
+          <h2>HAPPY CUSTOMERS</h2>
+          <p>Join our growing community of delighted customers who have enjoyed seamless travel experiences and unforgettable adventures. With our trusted services, personalized packages, and commitment to excellence, we ensure every journey is smooth, memorable, and tailored to your unique needs. </p>
+        </div>
+        <ul id="statusbar">
+          <li>
+            <img src="{% static 'travel/images/people.png' %}" alt="" class="icon">
+            <h4>CUSTOMERS</h4>
+            <count data-target="1789">0</count>
+          </li>
+          <li>
+            <img src="{% static 'travel/images/places.png' %}" alt="" class="icon">
+            <h4>PLACES</h4>
+            <count data-target="378">0</count>
+          </li>
+          <li>
+            <img src="{% static 'travel/images/teamone.png' %}" alt="" class="icon">
+            <h4>PACKAGERS</h4>
+            <count data-target="94">0</count>
+          </li>
+          
+          <li>
+            <img src="{% static 'travel/images/delivery-box.png' %}" alt="" class="icon">
+            <h4>PACKAGES</h4>
+            <count data-target="147">0</count>
+          </li>
+          <li>
+            <img src="{% static 'travel/images/hotel.png' %}" alt="" class="icon">
+            <h4>HOTELS</h4>
+            <count data-target="83">0</count>
+          </li>
+        </ul>
+      </section>
+    </section>
+</section>
+
+
+
+<section id="gallery">
+    <section class="wrapper">
+      <section class="content">
+        <div class="top">
+          <h2>GALLERY OF WONDERS</h2>
+          <p>Discover our Gallery of Wonders, showcasing stunning images from the most breathtaking destinations around the world. Each photo captures the beauty, culture, and magic of the places that inspire unforgettable journeys.</p>
+        </div>
+        <div class="gallery-container">
+          <div class="main-image-container">
+              <img id="mainImage" src="{% static 'travel/images/newplaceone.jpg' %}" alt="Main Image">
+          </div>
+          <div class="thumbnail-container">
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacetwo.jpg' %}" alt="Thumbnail 1">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacethree.jpg' %}" alt="Thumbnail 2">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacefour.jpg' %}" alt="Thumbnail 3">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacefive.jpg' %}" alt="Thumbnail 4">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacesix.jpg' %}" alt="Thumbnail 5">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplaceseven.jpg' %}" alt="Thumbnail 6">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplacenine.jpg' %}" alt="Thumbnail 7">
+              </div>
+              <div class="thumbnail" onclick="swapImage(this)">
+                  <img src="{% static 'travel/images/newplaceten.jpg' %}" alt="Thumbnail 8">
+              </div>
+              <div class="thumbnail more-button">
+                <a href="{% url 'gallery' %}" class="more-btn">More Pictures</a>
+            </div>
+          </div>
+      </div>
+      </section>
+    </section>
+</section>
+
+
+<section id="footer">
+    <img src="{% static 'travel/images/curve.svg' %}" alt="" class="curve">
+    <section class="wrapper">
+      <section class="content">
+        <section class="top">
+          <div class="item">
+              <h3>Travelers</h3>
+              <ul>
+                  <li><a href="{% url 'about_us' %}">About Us</a></li>
+                  <li><a href="{% url 'whats_new' %}">Whats New</a></li>
+                  <li><a href="https://www.tboacademy.com/blog/tourism-planning/" target="_blank">What is planing</a></li>
+              </ul>
+          </div>
+          <div class="item">
+              <h3>Resources</h3>
+              <ul>
+                  <li><a href="{% url 'technical_support' %}">Technical support</a></li>
+                  <li><a href="{% url 'faq' %}">FAQ</a></li>
+                  <li><a href="{% url 'all_packages' %}" >Plans & pricing</a></li>
+                  
+              </ul>
+          </div>
+          <div class="item large">
+              <h3>Connect with us</h3>
+              <p>Sign up for our articles and resources:</p>
+              <form action="">
+                  <input type="email" placeholder="Your Email" />
+                  <input type="submit" placeholder="Subscribe" />
+              </form>
+              <div class="social">
+                  <p>Connect with Travelers</p>
+                  <ul>
+                      <li><a href=""><img src="{% static 'travel/images/facebook-badge.svg' %}" alt=""></a></li>
+                      <li><a href=""><img src="{% static 'travel/images/twitter.svg' %}" alt=""></a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="pack">
+            <h3>Log in as a packager</h3>
+            <p>If you are a packager login with this</p>
+            <a href="#" class="btn-for-pkg">Sign Up</a>
+          </div>
+      </section>
+      <section class="bottom">
+          <div class="left">
+              <div class="top">
+                  <h1 class="left">
+                      <a href=""><img src="{% static 'travel/images/touring.png' %}" alt=""></a>
+                  </h1>
+                  <ul>
+                     <li><a href="{% url 'privacy_policy' %}">Privacy policy</a></li>
+                     <li><a href="{% url 'terms_use' %}">Terms of use</a></li>
+                     <li><a href="{% url 'trust_security' %}">Trust & security</a></li>
+                  </ul>
+                  <p>Copyright &copy; 2020</p>
+              </div>
+              <div class="bottom">
+                  <form action="">
+                  <select name="" id="">
+                      <option value="" disabled="">choose your language</option>
+                      <option value="en">English</option>
+                     
+                  </select>
+                  </form>
+              </div>
+          </div>
+          <div class="right">
+              <a href="{% url 'all_packages' %}" class="button">View all plans <img src="{% static 'travel/images/right-arrow.svg' %}" alt=""></a>
+          </div>
+      </section>
+      </section>
+    </section>
+  </section>    
+
+
+{% endblock %}

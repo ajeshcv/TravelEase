@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Website</title>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+    <style>
+        .my-chats-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .my-chats-container h2 {
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        .my-chats-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .my-chats-container li {
+            margin-bottom: 10px;
+        }
+
+        .my-chats-container a.packager-link {
+            display: block;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            color: #343a40;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .my-chats-container a.packager-link:hover {
+            background-color: #007bff;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .my-chats-container p {
+            color: #757575;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .back-to-profile {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-profile:hover {
+            background-color: #0056b3;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="my-chats-container">  <h2>My Chats</h2>
+
+        {% if packagers_with_chats %}
+            <ul>
+                {% for packager in packagers_with_chats %}
+                <a style="margin-bottom: 8px;" href="{% url 'chat_view' packager.id %}" class="packager-link">
+                    {{ packager.username }}
+                    {% if unread_counts.packager.id > 0 %}  <span class="unread-count">({{ unread_counts.packager.id }})</span>  {% endif %}
+                </a>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No chats yet.</p>
+        {% endif %}
+
+        <a href="{% url 'user_profile' %}" class="back-to-profile">Back to Profile</a>
+    </div> </body>
+</html>

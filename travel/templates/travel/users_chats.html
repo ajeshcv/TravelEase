@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Chats</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/my_chats.css' %}">  </head>
+    <style>
+        .my-chats-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-chats-container h2 {
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.my-chats-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.my-chats-container li {
+    margin-bottom: 10px;
+}
+
+.my-chats-container a { 
+    display: block;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    color: #343a40;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+}
+
+
+.my-chats-container a:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.my-chats-container li:last-child a{ 
+    margin-bottom: 0;
+}
+
+
+.back-to-dashboard { 
+    margin-top: 20px;
+    margin-left: 620px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.back-to-dashboard:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+
+    .unread-count {
+        color: red;
+        margin-left: 5px;
+    }
+    </style>
+<body>
+    <div class="my-chats-container">
+        <h2>My Chats</h2>
+        <ul>
+            {% for customer in customers_with_chats %}
+            <li>
+                <a href="{% url 'chat_view' customer.id %}" class="packager-link">
+                    {{ customer.username }}
+                    {% if unread_counts.customer.id > 0 %}  <span class="unread-count">({{ unread_counts.customer.id }})</span>  {% endif %}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+    <a href="{% url 'packager_dashboard' %}" class="back-to-dashboard">Back to Dashboard</a>
+</body>
+</html>

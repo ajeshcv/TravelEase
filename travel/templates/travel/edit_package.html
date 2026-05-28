@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Edit Package</title>
+    <style>
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+      
+        form {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="file"] {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+        }
+
+       
+        button[type="submit"],
+        a.btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover,
+        a.btn:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+
+        button[type="submit"]:active,
+        a.btn:active {
+            background-color: #005cbf;
+            transform: translateY(2px);
+        }
+
+       
+        a.btn {
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Package</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="helptext">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <label for="images">Upload Extra Images:</label>
+            <input type="file" name="images" id="images" multiple>
+        </div>
+
+
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'packager_dashboard' %}" class="btn">Back to Dashboard</a>
+
+    </form>
+</body>
+</html>

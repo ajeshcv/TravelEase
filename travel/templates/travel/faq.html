@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <header>
+        <h1>Frequently Asked Questions</h1>
+    </header>
+    
+    <section class="faq-container">
+        <div class="faq-item">
+            <h2>❓ How do I book a trip?</h2>
+            <p>You can book a trip by visiting our booking page and selecting your desired package.</p>
+        </div>
+        <div class="faq-item">
+            <h2>💰 What payment methods are accepted?</h2>
+            <p>We accept credit cards, PayPal, and bank transfers.</p>
+        </div>
+        <div class="faq-item">
+            <h2>📅 Can I modify my booking?</h2>
+            <p>Yes, you can modify your booking by contacting our support team at least 48 hours before departure.</p>
+        </div>
+        <div class="faq-item">
+            <h2>🚀 What if I need to cancel my trip?</h2>
+            <p>You can cancel your trip as per our cancellation policy. Please check our terms and conditions.</p>
+        </div>
+    </section>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+    .faq-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .faq-item {
+        margin-bottom: 20px;
+    }
+    .faq-item h2 {
+        color: #007bff;
+    }
+</style>

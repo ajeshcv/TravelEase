@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 4px solid #007bff;
+            max-width: 150px;
+            height: auto;
+        }
+
+        .profile-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .profile-container p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .profile-container p strong {
+            color: #555;
+        }
+
+        .profile-container .btn-one {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-container .btn-one:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Your Profile</h2>
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+        {% else %}
+            <p>No profile image uploaded.</p>
+        {% endif %}
+        <p><strong>Name:</strong> {{ profile.name }}</p>
+        <p><strong>Location:</strong> {{ profile.location }}</p>
+        <p><strong>Other Details:</strong> {{ profile.other_details }}</p>
+        <a href="{% url 'edit_profile' %}" class="btn-one">Edit Profile</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,292 @@
+{% extends 'travel/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    #packagerContent section.content {
+        
+        display: flex;
+        flex-direction: row-reverse; 
+        justify-content: space-between;
+        align-items: flex-start; 
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    #packagerContent section.content .left{
+        width: 63%;
+        margin-right: 100px;
+    }
+    #packagerContent .content .left .top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    #packagerContent .content .left .top h4{
+        font-size: 42px;
+        font-weight: bold;
+       
+    }
+    #packagerContent .content .left .top p{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    hr{
+        border: 2px solid whitesmoke;
+        margin: 20px 0;
+    }
+    #packagerContent .content .left .packages h3{
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    #packagerContent .content .left .packages .package-grids{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 70px;
+    }
+    #packagerContent .content .left .packages .package-grids .package-card {
+        perspective: 1000px;
+        width: 45%;
+        height: 300px;
+        position: relative;
+    }
+    #packagerContent .content .left .packages .package-grids .package-card .card-front {
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    }
+    #packagerContent .content .left .packages .package-grids .package-card .card-front h3 {
+        margin: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+    }
+    #packagerContent section.content .right {
+        width: 33%;
+       
+    } 
+    #packagerContent .content .right img {
+        display: block;
+        width: 200px;
+        height: 200px;
+        border-radius: 60px;
+        margin: auto;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+    #packagerContent .content .right img:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    #packagerContent .content .right .name{
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        margin-top: 10px;
+    }
+    #packagerContent .content .right h3{
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+    #packagerContent .content .right .details {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    #packagerContent .content .right div.contact{
+        background:whitesmoke;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 24px;
+        margin-top: 24px;
+    }
+    #packagerContent .content .right div.contact h5{
+        font-size: 24px;
+        color: red;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    #packagerContent .content .right .map{
+        margin-top: 20px;
+    }
+    #packagerContent .content .right .map iframe{
+        border-radius: 12px;
+    }
+    a.btnchat{
+        background-color: #007BFF;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    font-weight: 500;
+    width: auto;
+    flex: 1;
+    margin-top: 8px;
+    }
+</style>
+
+
+<section id="bg-more">
+    <section class="wrapper">
+        <section class="container">
+            <h1>PACKAGER DETAILS</h1>
+        </section>
+    </section>
+</section>
+
+<section id="packagerContent">
+   <section class="wrapper">
+        <section class="content">
+            
+            
+            <div class="right">
+               <div class="image">
+                <img src="{{ packager.profile_image.url }}" alt="">
+                <p class="name">{{packager.name}}</p>
+                <h3>Abous us</h3>
+                <p class="details">{{packager.other_details}}</p>
+                <div class="contact">
+                    <h5>Connect with us</h5>
+                    <p>Phone Number: <span style="color: blue;">{{packager.phone_number}}</span> </p>
+                    <p>E-Mail: <span style="color: blue;">{{packager.email}}</span> </p>
+                    <a  href="{% url 'start_chat' packager.id %}" class="btnchat">Chat  {{ packager.name }}</a>
+                </div>
+                
+                <div class="map">
+                    <iframe src="{{ packager.map_url }}" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+               </div>
+            </div>
+
+            <div class="left">
+                <div class="top">
+                    <h4>{{ packager.name }}</h4>
+                    <p>Contact: {{ packager.phone_number }}</p>
+                </div>
+                <hr>
+                <div class="sub">
+                    <p>Location: {{ packager.location }}</p>
+                </div>
+                <hr>
+                <div class="packages">
+                    <h3>OUR PACKAGES</h3>
+                    <div class="package-grids">
+                        {% for package in packages %}
+                        <div class="package-card">
+                            <div class="card-inner">
+                                <!-- Front Side -->
+                                <div class="card-front">
+                                    <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
+                                    <h3>{{ package.name|upper }}</h3>
+                                    <p>{{ package.description|truncatewords:30}}</p>
+                                </div>
+                                <!-- Back Side -->
+                                <div class="card-back">
+                                    <h4>Discover More</h4>
+                                      <p class="price">Price: <span>&#8377; {{package.price}}</span> per person</p>
+                                      <div class="reviews">
+                                          <i class="icon-star"></i> 4.5 (120 reviews)
+                                      </div>
+                                      <ul class="back-details-list">
+                                          <li><i class="fa fa-star checked"></i> Stunning views</li>
+                                          <li><i class="fa fa-star checked"></i> Cultural experiences</li>
+                                          <li><i class="fa fa-star checked"></i> Luxury accommodations</li>
+                                          <li><i class="fa fa-star checked"></i> Guided tours available</li>
+                                      </ul>
+                                    <a href="/packages/{{ package.id }}/" class="btn">Know More</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                </div>
+            </div>
+        </section>
+   </section>
+</section>
+
+<section id="footer">
+    <img src="{% static 'travel/images/curve.svg' %}" alt="" class="curve">
+    <section class="wrapper">
+      <section class="content">
+        <section class="top">
+          <div class="item">
+              <h3>Travelers</h3>
+              <ul>
+                  <li><a href="">Blog</a></li>
+                  <li><a href="">About Us</a></li>
+                  <li><a href="">Whats New</a></li>
+              </ul>
+          </div>
+          <div class="item">
+              <h3>Resources</h3>
+              <ul>
+                  <li><a href="">Technical support</a></li>
+                  <li><a href="">FAQ</a></li>
+                  <li><a href="">Plans & pricing</a></li>
+                  <li><a href="">What is planing</a></li>
+              </ul>
+          </div>
+          <div class="item large">
+              <h3>Connect with us</h3>
+              <p>Sign up for our articles and resources:</p>
+              <form action="">
+                  <input type="email" placeholder="Your Email" />
+                  <input type="submit" placeholder="Subscribe" />
+              </form>
+              <div class="social">
+                  <p>Connect with Travelers</p>
+                  <ul>
+                      <li><a href=""><img src="{% static 'travel/images/facebook-badge.svg' %}" alt=""></a></li>
+                      <li><a href=""><img src="{% static 'travel/images/twitter.svg' %}" alt=""></a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="pack">
+            <h3>Log in as a packager</h3>
+            <p>If you are a packager login with this</p>
+            <a href="#" class="btn-for-pkg">Sign Up</a>
+          </div>
+      </section>
+      <section class="bottom">
+          <div class="left">
+              <div class="top">
+                  <h1 class="left">
+                      <a href=""><img src="{% static 'travel/images/touring.png' %}" alt=""></a>
+                  </h1>
+                  <ul>
+                     <li><a href="">Privacy policy</a></li>
+                     <li><a href="">Terms of use</a></li>
+                     <li><a href="">Trust & security</a></li>
+                  </ul>
+                  <p>Copyright &copy; 2020</p>
+              </div>
+              <div class="bottom">
+                  <form action="">
+                  <select name="" id="">
+                      <option value="" disabled="">choose your language</option>
+                      <option value="en">English</option>
+                      <option value="fr">French</option>
+                      <option value="ar">Arabic</option>
+                  </select>
+                  </form>
+              </div>
+          </div>
+          <div class="right">
+              <a href="" class="button">View all plans <img src="{% static 'travel/images/right-arrow.svg' %}" alt=""></a>
+          </div>
+      </section>
+      </section>
+    </section>
+  </section>    
+
+
+{% endblock %}

@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        #profile {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #profile h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        #profile h3 {
+            margin-top: 30px;
+            color: #555;
+        }
+
+        #profile p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        #profile p strong {
+            color: #555;
+        }
+
+        #profile img {
+            display: block;
+        width: 180px;
+        height: 180px;
+        border-radius: 60px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        margin-bottom: 20px;
+        }
+
+        #profile .btn-one {
+            display: inline-block;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        #profile .btn-one:hover {
+            background-color: #0056b3;
+        }
+
+        #profile form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #profile form button {
+            background-color: #d9534f;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #profile form button:hover {
+            background-color: #c9302c;
+        }
+
+      
+    #profile table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    #profile table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    #profile table th, #profile table td {
+        padding: 12px 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    #profile table th {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    #profile table tbody tr {
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease;
+    }
+
+    #profile table tbody tr:nth-child(even) {
+        background-color: #f1f1f1;
+    }
+
+    #profile table tbody tr:hover {
+        background-color: #f0f8ff;
+    }
+
+    #profile table tbody td {
+        font-size: 14px;
+        color: #555;
+    }
+    .button-group {
+            display: flex;
+            align-items: center; 
+            gap: 10px; 
+            margin-left: -20px;
+        }
+
+        .button-group > * { 
+          
+        }
+
+        .button-group form button {
+            margin-left: 20px;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <section id="profile">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <p>Email: {{ user.email }}</p>
+
+        {% if profile %}
+            <h3>Your Profile Details</h3>
+            {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+            {% endif %}
+            <p>Name: {{ profile.name }}</p>
+            <p>Location: {{ profile.location }}</p>
+            <p>Quote: {{ profile.other_details }}</p>
+
+            <div class="button-group">
+                <form method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button style="margin-top: 0px;" type="submit" class="btn-one">Upload Images</button>
+                </form>
+                <a href="{% url 'my_chats' %}" class="btn-one">My Chats</a>
+                <a href="{% url 'write_review' %}" class="btn-one">Write a Review</a>
+                {% if profile %}
+                    <a href="{% url 'edit_customer_profile' %}" class="btn-one">Edit Your Profile</a>
+                {% else %}
+                    <a href="{% url 'create_customer_profile' %}" class="btn-one">Create Your Profile</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        <h2>Your Bookings</h2>
+        {% if bookings %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Package</th>
+                        <th>Packager</th>
+                        <th>Travel Date</th>
+                        <th>Number of Travelers</th>
+                        <th>Status</th>
+                        <th>Total Price</th>
+                        <th>Payment Status</th> 
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.package.name }}</td>
+                            <td>{{ booking.package.packager.username }}</td>
+                            <td>{{ booking.travel_date }}</td>
+                            <td>{{ booking.num_travelers }}</td>
+                            <td>{{ booking.status }}</td>
+                            <td>{{ booking.total_price }}</td>
+                            <td>
+                                {% if booking.payment_link and booking.status == 'accepted' and booking.payment_status == 'pending' %}  {# Only show link if accepted and payment pending #}
+                                <a href="/pay/{{ booking.id }}/">Pay Now</a>  {# No token! #}
+                                {% elif booking.payment_status == 'paid' %}
+                                    Paid
+                                {% else %}
+                                    pending
+                                {% endif %}
+                            </td>
+                            
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No bookings yet.</p>
+        {% endif %}
+
+        
+
+        
+        <a href="{% url 'ask_faq' %}" class="btn-one">Ask a Question</a>
+        <a href="{% url 'view_faqs' %}" class="btn-one">View My FAQs</a>
+
+        
+        <a href="{% url 'home' %}" class="btn-one">Go Back to Home</a>
+        <a href="{% url 'change_password' %}" class="btn-one">Change Password</a>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-one" style="background: red;">Log Out</button>
+        </form>
+
+    </section>
+    </section>
+</body>
+</html>

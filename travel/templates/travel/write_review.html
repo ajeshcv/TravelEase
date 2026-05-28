@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .review-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-container h2 {
+            text-align: center;
+            font-size: 24px;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .review-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review-container form label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .review-container form textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .review-container form textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .review-container button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .review-container button:hover {
+            background-color: #0056b3;
+        }
+        .home-link {
+            display: block;
+            margin: 20px auto; 
+            padding: 10px 20px;
+            background-color: #00796b; 
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            font-size: 16px;
+            width: fit-content;
+        }
+
+        .home-link:hover {
+            background-color: #00695c;
+        }
+    </style>
+</head>
+<body>
+    <div class="review-container">
+        <h2>Write a Review</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Review</button>
+        </form>
+    </div>
+    <a href="{% url 'user_profile' %}" class="home-link">Go Back to Profile</a> 
+</body>
+</html>

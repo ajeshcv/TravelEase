@@ -1,0 +1,99 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+</head>
+
+<style>
+    
+    .question-form-container {
+        width: 90%;
+        max-width: 600px; 
+        margin: 20px auto; 
+        padding: 20px;
+        border: 1px solid #ced4da; 
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    
+    .question-form-container p {
+        margin-bottom: 15px; 
+    }
+    
+    .question-form-container label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500; 
+        color: #343a40; 
+    }
+    
+    .question-form-container textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+        resize: vertical; 
+        min-height: 120px; 
+        transition: border-color 0.3s ease; 
+    }
+    
+    .question-form-container textarea:focus {
+        border-color: #80bdff; 
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); 
+    }
+    
+    
+    .question-form-container button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff; 
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    
+    .question-form-container button[type="submit"]:hover {
+        background-color: #0056b3; 
+    }
+    
+   
+    .back-to-profile {
+        display: block;
+        margin: 20px auto; 
+        padding: 10px 20px;
+        background-color: #00796b; 
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        font-size: 16px;
+        width: fit-content; 
+    }
+    
+    .back-to-profile:hover {
+        background-color: #00695c;
+    }
+    
+    
+    
+    </style>
+    
+    <div class="question-form-container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Question</button>
+        </form>
+    </div>
+    
+    <a href="{% url 'user_profile' %}" class="back-to-profile">Back to Profile</a>

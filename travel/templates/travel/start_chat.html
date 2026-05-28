@@ -1,0 +1,89 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+</head>
+
+<style>
+form {
+    width: 90%; 
+    max-width: 600px;
+    margin: 20px auto; 
+    display: flex;
+    flex-direction: column; 
+}
+
+form p {
+    margin-bottom: 10px; 
+}
+
+form label {
+    display: block; 
+    margin-bottom: 5px;
+    font-weight: bold; 
+}
+
+form textarea,
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%; 
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; 
+}
+
+form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    align-self: flex-end; 
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+
+.home-link {
+    display: block;
+    margin: 20px auto; 
+    padding: 10px 20px;
+    background-color: #00796b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    font-size: 16px;
+    width: fit-content; 
+}
+
+.home-link:hover {
+    background-color: #00695c;
+}
+
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send</button>
+</form>
+
+<a href="{% url 'home' %}" class="home-link">Go Back to Home</a>  

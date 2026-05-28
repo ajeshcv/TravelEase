@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add/Edit Package</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
+    <style>
+         :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --text-color: #1f2937;
+            --label-color: #4b5563;
+            --border-color: #e5e7eb;
+            --background-light: #f9fafb;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --success-color: #059669;
+            --error-color: #dc2626;
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        form {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px var(--shadow-color),
+                0 10px 15px -3px var(--shadow-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .name-price-image-row {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .name-price-image-row .form-group {
+            margin-bottom: 0;
+        }
+        .name-price-image-row .form-group label {
+            margin-bottom: 0.5rem;
+        }
+        .name-price-image-row .form-group input,
+        .name-price-image-row .form-group select
+        {
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--label-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 1px solid black; 
+            border-radius: 8px;
+            background-color: white;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.75rem;
+            border: 2px dashed black; 
+            background: var(--background-light);
+            cursor: pointer;
+        }
+
+        .form-group input[type="file"]:hover {
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .extra-images {
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+        }
+
+        .extra-images label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--label-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border: 1px solid black; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: transform 0.2s ease;
+        }
+
+        .image-preview img:hover {
+            transform: scale(1.05);
+        }
+        .main-image-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-image-preview {
+            margin-top: 1rem;
+            max-width: 200px; 
+            height: auto;
+            border: 1px solid black; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+
+        .button-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button[type="submit"],
+        .btn {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        button[type="submit"]:hover,
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .helptext {
+            font-size: 0.75rem;
+            color: var(--label-color);
+            margin-top: 0.25rem;
+        }
+
+        .errorlist {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            list-style: none;
+            margin-top: 0.25rem;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Package</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-grid">
+
+                <div class="name-price-image-row">
+                    <div class="form-group">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                        {% if form.name.help_text %}
+                            <small class="helptext">{{ form.name.help_text }}</small>
+                        {% endif %}
+                        {% if form.name.errors %}
+                            <ul class="errorlist">
+                                {% for error in form.name.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.price.label_tag }}
+                        {{ form.price }}
+                        {% if form.price.help_text %}
+                            <small class="helptext">{{ form.price.help_text }}</small>
+                        {% endif %}
+                        {% if form.price.errors %}
+                            <ul class="errorlist">
+                                {% for error in form.price.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group main-image-group">
+                        {{ form.main_image.label_tag }}
+                        {{ form.main_image }}
+                        {% if form.main_image.help_text %}
+                            <small class="helptext">{{ form.main_image.help_text }}</small>
+                        {% endif %}
+                        {% if form.main_image.errors %}
+                            <ul class="errorlist">
+                                {% for error in form.main_image.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% if form.instance.main_image %}
+                            <img src="{{ form.instance.main_image.url }}" alt="Main Image" class="main-image-preview">
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% for field in form %}
+                    {% if field.name != 'name' and field.name != 'price' and field.name != 'main_image' %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="helptext">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="extra-images">
+                    <label for="images">Upload Extra Images</label>
+                    <input type="file" name="images" id="images" multiple>
+
+                    {% if form.instance.images.all %}
+                        <div class="image-preview">
+                            {% for image in form.instance.images.all %}
+                                <img src="{{ image.url }}" alt="Package Image">
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Save Changes</button>
+                    <a href="{% url 'packager_dashboard' %}" class="btn">Back to Dashboard</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

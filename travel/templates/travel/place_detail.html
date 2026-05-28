@@ -1,0 +1,189 @@
+{% extends 'travel/base.html' %}
+{% block content %}
+{% load static %}
+
+<section id="bg-more">
+    <section class="wrapper">
+        <section class="container">
+            <h1>PLACE DETAILS</h1>
+        </section>
+    </section>
+</section>
+<section class="placeContent">
+    <section class="wrapper">
+        <section class="content">
+            <div class="left">
+                <h2>{{ place.name }}</h2>
+                
+                <hr>
+                <div class="sub">
+                    <h6 style="font-weight: bold; font-size: 20px; color: blue;">{{ place.short_description }}</h6>
+                </div>
+                <hr>
+                <div class="image">
+                    <img src="{{ place.image.url }}" alt="{{ place.name }}">
+                </div>
+                <h4 style="font-size: 32px;">More Details</h4>
+                <p class="details">
+                    {{ place.long_description }}
+                </p>
+            </div>
+            <div class="right">
+                <div class="image">
+                    <h5>THE EXTRA IMAGES</h5>
+                    <p>The more wondering about this place</p>  
+                    
+                    <!-- Slider Section -->
+                    <div class="slider-container">
+                        <div class="slider">
+                            {% for image in extra_images %}
+                            <div class="slide">
+                                <img src="{{ image.url.url }}" alt="{{ image.description }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+                    </div>
+                </div>
+
+                <div class="map">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d209692.4818791092!2d-0.5103750783783286!3d51.28676009929144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b2d1ff0f283%3A0x5c8e4df40a3ad25f!2sLondon%2C%20UK!5e0!3m2!1sen!2sus!4v1704368995480"  
+                        width="100%" 
+                        height="300" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                
+                <div class="include">
+                    <h4>THINGS YOU CAN DO</h4>
+                    <ul style="color: white;">
+                        <li>Sightseeing & Landmarks</li>
+                        <li>Outdoor Activities & Nature</li>
+                        <li>Food & Dining</li>
+                        <li> Entertainment & Nightlife</li>
+                        <li>Cultural & Historical Experiences</li>
+                        <li>Water & Adventure Activities</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+
+
+<section id="footer">
+    <img src="{% static 'travel/images/curve.svg' %}" alt="" class="curve">
+    <section class="wrapper">
+      <section class="content">
+        <section class="top">
+          <div class="item">
+              <h3>Travelers</h3>
+              <ul>
+                  <li><a href="">Blog</a></li>
+                  <li><a href="">About Us</a></li>
+                  <li><a href="">Whats New</a></li>
+              </ul>
+          </div>
+          <div class="item">
+              <h3>Resources</h3>
+              <ul>
+                  <li><a href="">Technical support</a></li>
+                  <li><a href="">FAQ</a></li>
+                  <li><a href="">Plans & pricing</a></li>
+                  <li><a href="">What is planing</a></li>
+              </ul>
+          </div>
+          <div class="item large">
+              <h3>Connect with us</h3>
+              <p>Sign up for our articles and resources:</p>
+              <form action="">
+                  <input type="email" placeholder="Your Email" />
+                  <input type="submit" placeholder="Subscribe" />
+              </form>
+              <div class="social">
+                  <p>Connect with Travelers</p>
+                  <ul>
+                      <li><a href=""><img src="{% static 'travel/images/facebook-badge.svg' %}" alt=""></a></li>
+                      <li><a href=""><img src="{% static 'travel/images/twitter.svg' %}" alt=""></a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="pack">
+            <h3>Log in as a packager</h3>
+            <p>If you are a packager login with this</p>
+            <a href="#" class="btn-for-pkg">Sign Up</a>
+          </div>
+      </section>
+      <section class="bottom">
+          <div class="left">
+              <div class="top">
+                  <h1 class="left">
+                      <a href=""><img src="{% static 'travel/images/touring.png' %}" alt=""></a>
+                  </h1>
+                  <ul>
+                     <li><a href="">Privacy policy</a></li>
+                     <li><a href="">Terms of use</a></li>
+                     <li><a href="">Trust & security</a></li>
+                  </ul>
+                  <p>Copyright &copy; 2020</p>
+              </div>
+              <div class="bottom">
+                  <form action="">
+                  <select name="" id="">
+                      <option value="" disabled="">choose your language</option>
+                      <option value="en">English</option>
+                      <option value="fr">French</option>
+                      <option value="ar">Arabic</option>
+                  </select>
+                  </form>
+              </div>
+          </div>
+          <div class="right">
+              <a href="" class="button">View all plans <img src="{% static 'travel/images/right-arrow.svg' %}" alt=""></a>
+          </div>
+      </section>
+      </section>
+    </section>
+  </section>    
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider .slide');
+    const totalSlides = slides.length;
+    
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    
+    function showSlide(index) {
+        
+        if (index >= totalSlides) {
+            currentSlide = 0; 
+        } else if (index < 0) {
+            currentSlide = totalSlides - 1;
+        } else {
+            currentSlide = index;
+        }
+    
+        
+        document.querySelector('.slider').style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+    
+    prevButton.addEventListener('click', () => {
+        showSlide(currentSlide - 1); 
+    });
+    
+    nextButton.addEventListener('click', () => {
+        showSlide(currentSlide + 1); 
+    });
+    
+   
+    showSlide(currentSlide);
+    
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <header>
+        <h1>Terms of Use</h1>
+    </header>
+    
+    <section class="terms-container">
+        <h2>📜 Introduction</h2>
+        <p>Welcome to our website. By using our services, you agree to the following terms and conditions.</p>
+        
+        <h2>✅ Acceptable Use</h2>
+        <p>You agree to use our website legally and ethically, refraining from any actions that could harm others.</p>
+        
+        <h2>⚖️ User Responsibilities</h2>
+        <p>You are responsible for maintaining the confidentiality of your account details and for all activities under your account.</p>
+        
+        <h2>🚫 Prohibited Activities</h2>
+        <p>Any unauthorized access, fraudulent activities, or harmful actions against our website are strictly prohibited.</p>
+        
+        <h2>🔄 Modifications</h2>
+        <p>We reserve the right to update or modify these terms at any time. Continued use constitutes acceptance of changes.</p>
+    </section>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+    .terms-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: left;
+    }
+    .terms-container h2 {
+        color: #007bff;
+    }
+</style>

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <header>
+        <h1>Privacy Policy</h1>
+    </header>
+    
+    <section class="privacy-container">
+        <h2>🔒 Introduction</h2>
+        <p>Your privacy is important to us. This policy explains how we collect, use, and protect your data.</p>
+        
+        <h2>📄 Information We Collect</h2>
+        <p>We may collect personal details such as name, email, and payment information when you use our services.</p>
+        
+        <h2>🔍 How We Use Your Information</h2>
+        <p>We use your data to provide and improve our services, process transactions, and communicate with you.</p>
+        
+        <h2>🛡️ Data Protection</h2>
+        <p>We implement security measures to protect your personal information from unauthorized access.</p>
+        
+        <h2>⚖️ Your Rights</h2>
+        <p>You have the right to access, modify, or delete your personal data. Contact us for any requests.</p>
+    </section>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+    .privacy-container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: left;
+    }
+    .privacy-container h2 {
+        color: #007bff;
+    }
+</style>

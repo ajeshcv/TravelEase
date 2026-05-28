@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Travel Website{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'travel/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="{% static 'travel/js/script.js' %}"></script>
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <section id="main">
+        <header>
+            <section class="wrapper">
+                <div class="left">
+                    <h1>
+                        <a href="{% url 'home' %}"><img src="{% static 'travel/images/touring.png' %}" alt="icon"></a>
+                    </h1>
+                </div>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                
+                <div class="middle">
+                    <ul id="nav-menu">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'all_places' %}">Places</a></li>
+                        <li>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'all_packages' %}">Packages</a>
+                            {% else %}
+                                <a href="{% url 'login' %}?next={% url 'all_packages' %}">Packages</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'all_packagers' %}">Packagers</a>
+                            {% else %}
+                                <a href="{% url 'login' %}?next={% url 'all_packagers' %}">Packagers</a>
+                            {% endif %}
+                        </li>
+                        <li><a href="{% url 'all_hotels' %}">Hotels</a></li>
+                        <li><a href="{% url 'all_reviews' %}">Reviews</a></li>
+                    </ul>
+                </div>
+                
+                <div class="right">
+                    <ul id="nav-auth">
+                        {% if user.is_authenticated and user.user_type == 'customer' %}
+                            <li><a href="{% url 'user_profile' %}" class="btn-one">Your Profile</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}" class="btn-one">Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </section>
+        </header>
+   </section>
+    
+    {% block content %}
+    
+    {% endblock %}
+
+</body>
+</html>
+

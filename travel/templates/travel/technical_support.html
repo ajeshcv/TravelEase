@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="{% static 'travel/images/touring.png' %}"
+
+/>
+</head>
+<body>
+    <header>
+        <h1>Technical Support</h1>
+    </header>
+    
+    <section class="support-container">
+        <div class="support-card">
+            <h2>📞 Contact Support</h2>
+            <p>Reach us via email at <a href="mailto:support@example.com">support@example.com</a> or call us at +123456789.</p>
+        </div>
+        <div class="support-card">
+            <h2>🔍 FAQs</h2>
+            <p>Find answers to common technical issues in our <a href="{% url 'faq' %}">FAQ section</a>.</p>
+        </div>
+        <div class="support-card">
+            <h2>💡 Troubleshooting</h2>
+            <p>Follow our step-by-step guides to fix common problems.</p>
+        </div>
+        <div class="support-card">
+            <h2>🛠 Report an Issue</h2>
+            <p>Encountering a bug? <a href="">Report it here</a>, and we'll fix it ASAP.</p>
+        </div>
+    </section>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    header {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+        position: sticky;
+        top: 0;
+        width: 100%;
+    }
+    .support-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    .support-card {
+        background: white;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+</style>
