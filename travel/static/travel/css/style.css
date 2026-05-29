@@ -290,43 +290,79 @@ header div.right ul li a.btn-one:hover {
 }
 
 /* Mobile menu styles */
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     .menu-toggle {
         display: block;
+        position: fixed;
+        right: 20px;
+        top: 20px;
+    }
+
+    .middle {
+        position: relative;
     }
 
     .middle ul {
         position: fixed;
         top: 0;
-        right: -100%; /* Start off-screen */
-        width: 250px;
-        height: 200px;
-        background: rgba(0, 0, 0, 0.9);
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
         flex-direction: column;
         align-items: center;
-        padding-top: 80px;
-        transition: right 0.4s ease-in-out; /* Smooth transition */
+        justify-content: flex-start;
+        padding-top: 100px;
+        padding-left: 0;
+        padding-right: 0;
+        transition: right 0.3s ease-in-out;
         z-index: 1000;
+        overflow-y: auto;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
     }
 
     .middle ul.show {
-        right: 0; /* Slide in */
+        right: 0;
     }
 
     .middle ul li {
-        margin: 20px 0;
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
     }
 
     .middle ul li a {
-        font-size: 18px;
+        font-size: 16px;
         display: block;
         color: white;
         text-decoration: none;
-        transition: color 0.3s;
+        padding: 12px 20px;
+        transition: background-color 0.3s, color 0.3s;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .middle ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
         color: #f0f0f0;
+    }
+
+    /* Hide right section on mobile (login button) */
+    header div.right {
+        display: none;
+    }
+
+    /* Add login link to mobile menu */
+    .middle ul#nav-menu::after {
+        content: '';
+        display: block;
+        padding: 20px;
+    }
+}
+
+/* Show right section on desktop */
+@media (min-width: 769px) {
+    header div.right {
+        display: block;
     }
 }
 
@@ -373,13 +409,14 @@ header div.right ul li a.btn-one:hover {
 	margin-bottom: 20px;
 	font-weight: bold;
 	color: #fff;
-	
+	line-height: 1.1;
 }
 #spotlight section.container p{
 	font-size: 20px;
 	font-weight: 500;
 	color: #fff;
 	width: 800px;
+	max-width: 100%;
 	margin: 0 auto;
 }
 #spotlight div.buttons {
@@ -819,12 +856,15 @@ header div.right ul li a.btn-one:hover {
 #why {
 	background-color:lightblue;
 	padding-top: 80px;
-	height: 400px;
+	padding-bottom: 80px;
+	position: relative;
+	min-height: 400px;
 }
 #why .content {
 	display: flex;
 	justify-content: space-between;
-	position: absolute;
+	position: relative;
+	flex-wrap: wrap;
 }
 #why .content div.left {
 	width: 45%;
@@ -2032,4 +2072,566 @@ section.placeContent .checked {
 
 section.placeContent .fa {
     font-size: 20px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - COMPREHENSIVE UPDATES
+   ======================================== */
+
+/* Large tablets and small desktops (max-width: 1200px) */
+@media (max-width: 1200px) {
+    #spotlight section.container h1 {
+        font-size: 60px;
+    }
+    
+    #places section.container div.details ul li {
+        width: 45%;
+        margin-right: 0;
+    }
+    
+    #places section.container div.details ul li:nth-child(3),
+    #places section.container div.details ul li:nth-child(6),
+    #places section.container div.details ul li:nth-child(9),
+    #places section.container div.details ul li:nth-child(12) {
+        margin-right: 0;
+    }
+    
+    .package-card {
+        width: 45%;
+    }
+    
+    .packager-card {
+        width: 30%;
+    }
+    
+    #why .content div.right img {
+        width: 300px;
+        margin-left: 50px;
+    }
+}
+
+/* Tablets (max-width: 992px) */
+@media (max-width: 992px) {
+    #spotlight {
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    #spotlight section.container {
+        margin-top: 50px;
+    }
+    
+    #spotlight section.container h1 {
+        font-size: 48px;
+    }
+    
+    #places section.container div.content h2,
+    .packages .top h2,
+    .packagers h2,
+    #hotels div.top h2,
+    #reviews .top h2,
+    #gallery .content div.top h2 {
+        font-size: 32px;
+    }
+    
+    #places section.container div.details ul li {
+        width: 100%;
+    }
+    
+    #places section.container div.details ul li a img.place-img {
+        height: 300px;
+    }
+    
+    #places section.container div.details ul li div.bg {
+        width: 90%;
+        height: auto;
+        top: auto;
+        bottom: 10px;
+        left: 5%;
+        padding: 15px;
+    }
+    
+    .package-card {
+        width: 100%;
+        height: auto;
+        min-height: 350px;
+    }
+    
+    .packager-card {
+        width: 45%;
+        height: auto;
+        min-height: 350px;
+    }
+    
+    #why {
+        height: auto;
+        padding: 60px 0;
+    }
+    
+    #why .content {
+        flex-direction: column;
+        position: relative;
+        text-align: center;
+    }
+    
+    #why .content div.left,
+    #why .content div.right {
+        width: 100%;
+    }
+    
+    #why .content div.right img {
+        width: 250px;
+        margin: 30px auto 0;
+        position: static;
+    }
+    
+    .reviews-section {
+        flex-direction: column;
+    }
+    
+    .user-list,
+    .review-details {
+        width: 100%;
+    }
+    
+    #parallax {
+        background-attachment: scroll;
+    }
+    
+    #parallax .content div.left {
+        width: 80%;
+    }
+    
+    .hotel-card {
+        flex-direction: column;
+    }
+    
+    .hotel-card .left img {
+        height: 200px;
+        border-radius: 10px 10px 0 0;
+    }
+    
+    .hotel-card .middle,
+    .hotel-card .right {
+        border-radius: 0;
+    }
+    
+    #statusbarbg .content ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #statusbarbg .content ul li {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+    }
+    
+    #gallery .content .gallery-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    #gallery .content .main-image-container {
+        width: 100%;
+        height: 300px;
+    }
+    
+    #gallery .content .thumbnail-container {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    #gallery .content .thumbnail {
+        width: calc(33.33% - 10px);
+        height: 100px;
+    }
+    
+    #footer section.top {
+        flex-wrap: wrap;
+    }
+    
+    #footer section.top div.item,
+    #footer section.top div.pack {
+        width: 45%;
+        margin-bottom: 30px;
+    }
+    
+    section.placeContent .content {
+        flex-direction: column;
+    }
+    
+    section.placeContent div.left,
+    section.placeContent div.right {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    section.placeContent div.left div.image {
+        height: 400px;
+    }
+}
+
+/* Large phones and small tablets (max-width: 768px) */
+@media (max-width: 768px) {
+    #spotlight section.container h1 {
+        font-size: 36px;
+    }
+    
+    #spotlight section.container p {
+        font-size: 16px;
+    }
+    
+    #spotlight div.buttons a.btn-register,
+    #spotlight div.buttons a.btn-booknow {
+        font-size: 16px;
+        padding: 8px 16px;
+        margin: 5px;
+        display: inline-block;
+    }
+    
+    #places section.container div.content,
+    .packages .top,
+    .packagers div.top,
+    #hotels div.top,
+    #reviews .top,
+    #gallery .content div.top {
+        width: 90%;
+    }
+    
+    #places section.container div.content h2,
+    .packages .top h2,
+    .packagers h2,
+    #hotels div.top h2,
+    #reviews .top h2,
+    #gallery .content div.top h2 {
+        font-size: 28px;
+    }
+    
+    #places section.container div.content p,
+    .packages .top p,
+    .packagers p,
+    #hotels div.top p,
+    #reviews .top p,
+    #gallery .content div.top p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    
+    .packager-card {
+        width: 100%;
+    }
+    
+    #why .content div.left h2 {
+        font-size: 28px;
+    }
+    
+    #why .content div.left p {
+        font-size: 14px;
+    }
+    
+    #parallax .content div.left h2 {
+        font-size: 24px;
+    }
+    
+    #parallax .content div.left p {
+        font-size: 14px;
+    }
+    
+    #statusbarbg .content .top h2 {
+        font-size: 32px;
+    }
+    
+    #statusbarbg .content .top p {
+        font-size: 16px;
+    }
+    
+    #statusbarbg .content ul li {
+        width: 90px;
+        height: 90px;
+    }
+    
+    #statusbarbg .content ul li count {
+        font-size: 24px;
+    }
+    
+    #footer section.top div.item,
+    #footer section.top div.pack {
+        width: 100%;
+    }
+    
+    #footer section.bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    #footer section.bottom div.left div.top ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 10px 0;
+    }
+    
+    #footer section.bottom div.left div.top ul li {
+        margin: 5px 10px;
+    }
+    
+    section.placeContent div.left h2 {
+        font-size: 32px;
+    }
+    
+    section.placeContent div.left div.include div.in {
+        flex-direction: column;
+    }
+    
+    section.placeContent div.left div.include div.in ul {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    #aboutUs #content h1,
+    #sectionPlaces #content h1,
+    #sectionPackages #content h1,
+    #sectionHotels #content h1,
+    #sectionReviews #content h1,
+    #sectionGallery #content h1,
+    #sectionPackagers #content h1 {
+        font-size: 42px;
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+
+/* Medium phones (max-width: 576px) */
+@media (max-width: 576px) {
+    body {
+        font-size: 15px;
+    }
+    
+    .wrapper {
+        width: 95%;
+    }
+    
+    #spotlight section.container h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+    
+    #spotlight section.container p {
+        font-size: 14px;
+    }
+    
+    #places section.container div.details ul li a img.place-img {
+        height: 250px;
+    }
+    
+    #places section.container div.details ul li div.bg {
+        padding: 12px;
+    }
+    
+    #places section.container div.details ul li div.bg h2 {
+        font-size: 18px;
+    }
+    
+    .package-card .card-front h3 {
+        font-size: 18px;
+    }
+    
+    .package-card .card-front p {
+        font-size: 13px;
+    }
+    
+    .package-card .card-back {
+        padding: 20px;
+    }
+    
+    .package-card .card-back h4 {
+        font-size: 1.2rem;
+    }
+    
+    #why .content div.left h2 {
+        font-size: 24px;
+    }
+    
+    #parallax {
+        height: auto;
+        padding: 60px 0;
+    }
+    
+    #parallax .content div.left {
+        width: 100%;
+        text-align: center;
+    }
+    
+    #parallax .content div.left h2 {
+        font-size: 22px;
+    }
+    
+    #statusbarbg {
+        height: auto;
+        padding: 40px 0;
+    }
+    
+    #statusbarbg .content ul li {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #statusbarbg .content ul li h4 {
+        font-size: 14px;
+    }
+    
+    #statusbarbg .content ul li count {
+        font-size: 20px;
+    }
+    
+    #gallery .content .thumbnail {
+        width: calc(50% - 10px);
+        height: 80px;
+    }
+    
+    #footer section.top {
+        padding: 40px 0 20px;
+    }
+    
+    section.placeContent .slider-container {
+        height: 200px;
+    }
+    
+    section.placeContent div.left h2 {
+        font-size: 28px;
+    }
+    
+    section.placeContent div.left div.image {
+        height: 300px;
+    }
+    
+    #aboutUs #content h1,
+    #sectionPlaces #content h1,
+    #sectionPackages #content h1,
+    #sectionHotels #content h1,
+    #sectionReviews #content h1,
+    #sectionGallery #content h1,
+    #sectionPackagers #content h1 {
+        font-size: 32px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    
+    #login .container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+/* Small phones (max-width: 400px) */
+@media (max-width: 400px) {
+    #spotlight section.container h1 {
+        font-size: 24px;
+    }
+    
+    #places section.container div.content h2,
+    .packages .top h2,
+    .packagers h2,
+    #hotels div.top h2,
+    #reviews .top h2,
+    #gallery .content div.top h2 {
+        font-size: 24px;
+    }
+    
+    .packager-card {
+        padding: 15px;
+    }
+    
+    .packager-card .button-container {
+        flex-direction: column;
+    }
+    
+    .packager-card .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+    
+    #gallery .content .thumbnail {
+        width: calc(50% - 8px);
+        height: 70px;
+    }
+    
+    section.placeContent div.left div.include div.in ul {
+        margin-right: 0;
+    }
+}
+
+/* Fix for mobile menu height */
+@media (max-width: 720px) {
+    .middle ul {
+        height: 100vh;
+        width: 280px;
+        padding-top: 100px;
+    }
+    
+    .middle ul li {
+        margin: 15px 0;
+    }
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix for overflow issues */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll */
+body {
+    overflow-x: hidden;
+}
+
+/* Fix for fixed background images on mobile */
+@media (max-width: 992px) {
+    #spotlight,
+    #parallax,
+    #statusbarbg {
+        background-attachment: scroll;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 768px) {
+    a, button, input, select, textarea {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    header div.middle ul li a,
+    header div.right ul li a {
+        padding: 10px;
+    }
+}
+
+/* Improve readability on small screens */
+@media (max-width: 576px) {
+    p, li {
+        line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        line-height: 1.3;
+    }
 }
