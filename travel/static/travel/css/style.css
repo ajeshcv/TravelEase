@@ -172,7 +172,10 @@ header {
     height: 70px;
     padding-top: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background: #000; /* Ensure background is visible */
+    background: #000;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 header section.wrapper {
@@ -180,11 +183,14 @@ header section.wrapper {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 0 20px;
+    padding: 0 15px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 header div.left h1 {
-    width: 65px;
+    width: 55px;
+    flex-shrink: 0;
 }
 
 header div.left h1 a img {
@@ -192,39 +198,58 @@ header div.left h1 a img {
     display: block;
 }
 
+header div.middle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
 header div.middle ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 header div.middle ul li {
-    margin-right: 30px;
+    margin: 0 8px;
+    white-space: nowrap;
 }
 
 header div.middle ul li:last-child {
-    margin-right: 0;
+    margin-right: 8px;
 }
 
 header div.middle ul li a {
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
     color: white;
     text-decoration: none;
     transition: color 0.3s;
+    white-space: nowrap;
 }
 
 header div.middle ul li a:hover {
-    color: #f0f0f0;
+    color: #4da6ff;
+}
+
+header div.right {
+    flex-shrink: 0;
 }
 
 header div.right ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap: 0;
 }
 
 header div.right ul li {
-    margin-right: 30px;
+    margin: 0 8px;
 }
 
 header div.right ul li:last-child {
@@ -232,22 +257,28 @@ header div.right ul li:last-child {
 }
 
 header div.right ul li a {
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 500;
     color: white;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 header div.right ul li a.btn-one {
     border-radius: 8px;
-    padding: 6px 16px;
-    border: 1px solid white;
+    padding: 10px 20px;
+    border: 2px solid white;
     background-color: transparent;
-    transition: background-color 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    font-weight: 600;
 }
 
 header div.right ul li a.btn-one:hover {
     background-color: white;
-    color: #333;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
 }
 
 /* Responsive Design */
@@ -289,13 +320,26 @@ header div.right ul li a.btn-one:hover {
     z-index: 1100;
 }
 
-/* Mobile menu styles */
+/* Mobile menu styles - Slide down from top */
 @media (max-width: 768px) {
     .menu-toggle {
         display: block;
         position: fixed;
         right: 20px;
         top: 20px;
+        z-index: 1100;
+        background: rgba(0, 0, 0, 0.5);
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+    }
+
+    .menu-toggle i {
+        font-size: 24px;
     }
 
     .middle {
@@ -305,57 +349,141 @@ header div.right ul li a.btn-one:hover {
     .middle ul {
         position: fixed;
         top: 0;
-        right: -100%;
-        width: 280px;
+        left: 0;
+        width: 100%;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.95);
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.95) 100%);
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
         padding-top: 100px;
-        padding-left: 0;
-        padding-right: 0;
-        transition: right 0.3s ease-in-out;
-        z-index: 1000;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        transform: translateY(-100%);
+        transition: transform 0.4s ease-in-out;
+        z-index: 999;
         overflow-y: auto;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(20px);
     }
 
     .middle ul.show {
-        right: 0;
+        transform: translateY(0);
     }
 
     .middle ul li {
-        margin: 5px 0;
+        margin: 0;
         width: 100%;
+        max-width: 400px;
         text-align: center;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
+    .middle ul.show li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .middle ul.show li:nth-child(1) { transition-delay: 0.1s; }
+    .middle ul.show li:nth-child(2) { transition-delay: 0.15s; }
+    .middle ul.show li:nth-child(3) { transition-delay: 0.2s; }
+    .middle ul.show li:nth-child(4) { transition-delay: 0.25s; }
+    .middle ul.show li:nth-child(5) { transition-delay: 0.3s; }
+    .middle ul.show li:nth-child(6) { transition-delay: 0.35s; }
+    .middle ul.show li:nth-child(7) { transition-delay: 0.4s; }
+    .middle ul.show li:nth-child(8) { transition-delay: 0.45s; }
+
     .middle ul li a {
-        font-size: 16px;
+        font-size: 18px;
+        font-weight: 500;
         display: block;
         color: white;
         text-decoration: none;
-        padding: 12px 20px;
-        transition: background-color 0.3s, color 0.3s;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 16px 24px;
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        margin: 4px 0;
     }
 
     .middle ul li a:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #f0f0f0;
+        background: linear-gradient(135deg, rgba(0, 102, 255, 0.2), rgba(0, 119, 255, 0.2));
+        color: #4da6ff;
+        transform: translateX(5px);
     }
 
-    /* Hide right section on mobile (login button) */
+    /* Show right section on mobile but inside menu */
     header div.right {
         display: none;
     }
 
-    /* Add login link to mobile menu */
-    .middle ul#nav-menu::after {
-        content: '';
+    /* Add auth links to mobile menu */
+    .middle ul#nav-menu {
+        padding-bottom: 0;
+    }
+
+    /* Mobile auth section */
+    .mobile-auth {
         display: block;
         padding: 20px;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .mobile-auth a {
+        display: block;
+        text-align: center;
+        padding: 14px 24px;
+        margin: 10px auto;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        max-width: 300px;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-auth a.btn-login {
+        background: linear-gradient(135deg, #0066ff, #0044cc);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+    }
+
+    .mobile-auth a.btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 102, 255, 0.6);
+    }
+
+    .mobile-auth a.btn-profile {
+        background: linear-gradient(135deg, #00b894, #00a085);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+    }
+
+    .mobile-auth a.btn-profile:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 184, 148, 0.6);
+    }
+
+    /* Add overlay when menu is open */
+    .middle ul::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .middle ul.show::before {
+        opacity: 1;
     }
 }
 
@@ -363,6 +491,10 @@ header div.right ul li a.btn-one:hover {
 @media (min-width: 769px) {
     header div.right {
         display: block;
+    }
+
+    .mobile-auth {
+        display: none;
     }
 }
 
@@ -2633,5 +2765,112 @@ body {
     
     h1, h2, h3, h4, h5, h6 {
         line-height: 1.3;
+    }
+}
+
+/* ========================================
+   FINAL FIXES - Completely remove horizontal scroll
+   ======================================== */
+
+/* Global overflow fix */
+html {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+}
+
+body {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+    position: relative;
+}
+
+/* Ensure all elements stay within viewport */
+* {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fix wrapper to never exceed viewport */
+.wrapper {
+    width: 90%;
+    max-width: 1300px;
+    margin: 0 auto;
+    overflow-x: hidden;
+}
+
+/* Fix all sections */
+section, header, footer {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Fix flex containers */
+.flex, [class*="flex-"], [class*="grid"] {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Fix images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Fix specific sections that might overflow */
+#spotlight, #places, #hotels, #reviews, #gallery, #footer,
+.packages, .packagers, #why, #parallax, #statusbarbg,
+section.placeContent, #bg-more {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Fix grids */
+.package-grid, .packager-grid, .hotels-grid,
+#places section.container div.details ul,
+#footer section.top, #footer section.bottom {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Fix cards */
+.package-card, .packager-card, .hotel-card,
+#places section.container div.details ul li {
+    max-width: 100%;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    
+    .wrapper {
+        width: 95%;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    header .wrapper {
+        padding: 0 15px;
+    }
+    
+    /* Ensure all elements respect viewport */
+    * {
+        max-width: 100vw;
+    }
+    
+    /* Fix mobile menu */
+    .middle ul {
+        max-width: 300px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    .wrapper {
+        width: 98%;
+        padding: 0 5px;
     }
 }

@@ -179,6 +179,124 @@
         color: #333;
     }
 
+    /* Responsive Design for About Us Page */
+    @media (max-width: 992px) {
+        .containers {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .left-panel {
+            width: 100%;
+            margin-top: 40px;
+            height: auto;
+            margin-right: 0;
+            padding: 20px;
+        }
+
+        .right-panel {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .event-info {
+            margin-left: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .location-details {
+            flex-direction: column;
+        }
+
+        .location-map, .details {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .left-panel h2 {
+            font-size: 1.5rem;
+        }
+
+        .left-panel h3 {
+            font-size: 1.2rem;
+        }
+
+        .left-panel p {
+            font-size: 14px;
+        }
+
+        .lodging-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        .event-info {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-box {
+            width: 80px;
+            height: 80px;
+        }
+
+        .info-box span {
+            font-size: 1.2rem;
+        }
+
+        .right-panel-section {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .right-panel-section p {
+            margin-left: 0 !important;
+        }
+
+        .location-details-section {
+            padding: 20px;
+        }
+
+        .location-details-section h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .left-panel {
+            padding: 15px;
+        }
+
+        .left-panel h2 {
+            font-size: 1.3rem;
+        }
+
+        .left-panel h3 {
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            width: 70px;
+            height: 70px;
+            padding: 15px;
+        }
+
+        .info-box span {
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            font-size: 12px;
+        }
+    }
+
 </style>
   
 

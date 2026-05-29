@@ -50,6 +50,15 @@
                         </li>
                         <li><a href="{% url 'all_hotels' %}">Hotels</a></li>
                         <li><a href="{% url 'all_reviews' %}">Reviews</a></li>
+                        
+                        <!-- Mobile Auth Buttons -->
+                        <li class="mobile-auth">
+                            {% if user.is_authenticated and user.user_type == 'customer' %}
+                                <a href="{% url 'user_profile' %}" class="btn-profile">Your Profile</a>
+                            {% else %}
+                                <a href="{% url 'login' %}" class="btn-login">Log In</a>
+                            {% endif %}
+                        </li>
                     </ul>
                 </div>
                 
