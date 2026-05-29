@@ -58,88 +58,116 @@
 
 <!-- Packages Section -->
 <section class="packages">
-    <div class="top">
-        <h2>POPULAR PACKAGES</h2>
-        <p>Popular Packages offer an expertly curated selection of travel experiences that cater to a variety of interests and preferences, providing exceptional value and unforgettable adventures. </p>
-    </div>
-    <div class="package-grid">
-        {% for package in packages %}
-        <div class="package-card">
-            <div class="card-inner">
-                <!-- Front Side -->
-                <div class="card-front">
-                    <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
-                    <h3>{{ package.name|upper }}</h3>
-                    <p>{{ package.description|truncatewords:36}}</p>
-                </div>
-                <!-- Back Side -->
-                <div class="card-back">
-                    <h4>Discover More</h4>
-                      <p class="price">Price: <span>&#8377; {{package.price}}</span> per person</p>
-                      <div class="reviews">
-                          <i class="icon-star"></i> 4.5 (120 reviews)
-                      </div>
-                      <ul class="back-details-list">
-                          <li><i class="fa fa-star checked"></i> Stunning views</li>
-                          <li><i class="fa fa-star checked"></i> Cultural experiences</li>
-                          <li><i class="fa fa-star checked"></i> Luxury accommodations</li>
-                          <li><i class="fa fa-star checked"></i> Guided tours available</li>
-                      </ul>
-                      {% if user.is_authenticated %}
-                      <a href="/packages/{{ package.id }}/" class="btn">Know More</a>
-                     {% else %}
-                      <a href="{% url 'login' %}?next=/packages/{{ package.id }}/" class="btn">Know More</a>
-                    {% endif %}
+    <div class="wrapper">
+        <div class="section-header">
+            <h2>POPULAR PACKAGES</h2>
+            <p>Popular Packages offer an expertly curated selection of travel experiences that cater to a variety of interests and preferences, providing exceptional value and unforgettable adventures.</p>
+        </div>
+        <div class="package-grid">
+            {% for package in packages %}
+            <div class="package-card">
+                <div class="card-inner">
+                    <!-- Front Side -->
+                    <div class="card-front">
+                        <img src="{{ package.main_image.url }}" alt="{{ package.name }}">
+                        <div class="card-info">
+                            <h3>{{ package.name|upper }}</h3>
+                            <p>{{ package.description|truncatewords:23 }}</p>
+                        </div>
+                    </div>
+                    <!-- Back Side -->
+                    <div class="card-back">
+                        <h4>Discover More</h4>
+                        <p class="price">Price: <span>&#8377; {{package.price}}</span> per person</p>
+                        <div class="reviews">
+                            <i class="fa fa-star" style="color: var(--accent-500);"></i> 4.5 (120 reviews)
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fa fa-check-circle"></i> Stunning views</li>
+                            <li><i class="fa fa-check-circle"></i> Cultural experiences</li>
+                            <li><i class="fa fa-check-circle"></i> Luxury accommodations</li>
+                            <li><i class="fa fa-check-circle"></i> Guided tours available</li>
+                        </ul>
+                        {% if user.is_authenticated %}
+                        <a href="/packages/{{ package.id }}/" class="btn btn-primary btn-sm">Know More</a>
+                        {% else %}
+                        <a href="{% url 'login' %}?next=/packages/{{ package.id }}/" class="btn btn-primary btn-sm">Know More</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <div class="more-link-container">
+            {% if user.is_authenticated %}
+            <a href="{% url 'all_packages' %}" class="more-link">MORE PACKAGES</a>
+            {% else %}
+            <a href="{% url 'login' %}?next={% url 'all_packages' %}" class="more-link">MORE PACKAGES</a>
+            {% endif %}
+        </div>
     </div>
-    <small>
-        {% if user.is_authenticated %}
-                <a href="{% url 'all_packages' %}" class="more">MORE PACKAGES</a>
-                {% else %}
-                <a href="{% url 'login' %}?next={% url 'all_packages' %}" class="more">MORE PACKAGES</a>
-                {% endif %}
-    </small>
 </section>
 
 
-<!-- Packagers Section -->
-<section class="packagers">
-    <div class="top">
-        <h2>OUR FEATURED PACAKAGERS</h2>
-    <p>Meet our top-rated packagers, offering exclusive deals, expertly curated trips, and unforgettable travel experiences tailored just for you.</p>
-    </div>
-    
-<div class="packagers">
-    <div class="packager-grid">
-        {% for packager in packagers %}
-        <div class="packager-card">
-            <img src="{{ packager.profile_image.url }}" alt="{{ packager.name }}">
-            <h3>{{ packager.name }}</h3>
-            <h5 style="font-size: 15px;">Contact: <span style="color: blue;">{{ packager.phone_number }}</span></h5>
-            <p>{{ packager.other_details|truncatewords:20 }}</p>
-            <div class="button-container">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'packager_detail' packager.id %}" class="btn">View Details</a>
-                    <a style="margin-left: 18px;" href="{% url 'start_chat' packager.id %}" class="btn">Chat {{ packager.name }}</a>
-                {% else %}
-                    <a href="{% url 'login' %}?next={% url 'packager_detail' packager.id %}" class="btn">View Details</a>
-                    <a style="margin-left: 18px;" href="{% url 'login' %}?next={% url 'start_chat' packager.id %}" class="btn">Chat {{ packager.name }}</a>
-                {% endif %}
-            </div>
+<!-- Packagers Section - Redesigned -->
+<section class="packagers section-gray">
+    <div class="wrapper">
+        <div class="section-header">
+            <h2>OUR FEATURED PACKAGERS</h2>
+            <p>Meet our top-rated packagers, offering exclusive deals, expertly curated trips, and unforgettable travel experiences tailored just for you.</p>
         </div>
-        {% endfor %}
+        
+        <div class="packager-grid">
+            {% for packager in packagers %}
+            <div class="packager-card">
+                <div class="avatar-wrapper">
+                    <img src="{{ packager.profile_image.url }}" alt="{{ packager.name }}" class="avatar">
+                    <span class="online-indicator"></span>
+                </div>
+                <h3>{{ packager.name }}</h3>
+                <span class="role">Travel Expert</span>
+                <div class="rating">
+                    <span class="stars">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-alt"></i>
+                    </span>
+                    <span>4.5</span>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">Packages</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">89</span>
+                        <span class="stat-label">Reviews</span>
+                    </div>
+                </div>
+                <p>{{ packager.other_details|truncatewords:20 }}</p>
+                <div class="button-container">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'packager_detail' packager.id %}" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="{% url 'start_chat' packager.id %}" class="btn btn-ghost btn-sm">Chat</a>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={% url 'packager_detail' packager.id %}" class="btn btn-primary btn-sm">View Details</a>
+                        <a href="{% url 'login' %}?next={% url 'start_chat' packager.id %}" class="btn btn-ghost btn-sm">Chat</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="more-link-container">
+            {% if user.is_authenticated %}
+                <a href="{% url 'all_packagers' %}" class="more-link">All Packagers</a>
+            {% else %}
+                <a href="{% url 'login' %}?next={% url 'all_packagers' %}" class="more-link">All Packagers</a>
+            {% endif %}
+        </div>
     </div>
-</div>
-<small>
-    {% if user.is_authenticated %}
-        <a href="{% url 'all_packagers' %}" class="more">All Packagers</a>
-    {% else %}
-        <a href="{% url 'login' %}?next={% url 'all_packagers' %}" class="more">All Packagers</a>
-    {% endif %}
-</small>
 </section>
 
 
@@ -229,35 +257,53 @@
 </section>
 
 
-<!-- Hotels Section -->
-<section id="hotels">
-    <div class="top">
-        <h2>TOP HOTELS</h2>
-    <p>Explore our selection of top hotels, offering luxurious stays, exceptional service, and unbeatable locations for an unforgettable travel experience.</p>
-    </div>
-    <div class="hotels-grid">
-        {% for hotel in hotels %}
-        <div class="hotel-card">
-           
-            <div class="left">
-                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
-            </div>
-           
-            <div class="middle">
-                <h3>{{ hotel.name }}</h3>
-                <p>{{ hotel.short_description }}</p>
-            </div>
-        
-            <div class="right">
-                <div class="price">Price: ${{ hotel.price_per_person }}/person</div>
-                <a href="{% url 'hotel_detail' hotel.id %}" class="details-button">Know More</a>
-            </div>
+<!-- Hotels Section - Redesigned -->
+<section id="hotels" class="section-gray">
+    <div class="wrapper">
+        <div class="section-header">
+            <h2>TOP HOTELS</h2>
+            <p>Explore our selection of top hotels, offering luxurious stays, exceptional service, and unbeatable locations for an unforgettable travel experience.</p>
         </div>
-        {% endfor %}
+        
+        <div class="hotels-grid">
+            {% for hotel in hotels %}
+            <div class="hotel-card">
+                <div class="hotel-image">
+                    <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+                </div>
+                <div class="hotel-content">
+                    <h3>{{ hotel.name }}</h3>
+                    <p>{{ hotel.short_description|truncatewords:15 }}</p>
+                    <div class="hotel-meta">
+                        <div class="hotel-rating">
+                            <span class="stars">
+                                {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= hotel.rating %}
+                                        <i class="fa fa-star"></i>
+                                    {% else %}
+                                        <i class="fa fa-star" style="color: var(--gray-300);"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                            <span>{{ hotel.rating }}</span>
+                        </div>
+                        <div class="hotel-price">
+                            <span class="amount">${{ hotel.price_per_person }}</span>
+                            <span class="label">/person</span>
+                        </div>
+                    </div>
+                    <div class="hotel-action">
+                        <a href="{% url 'hotel_detail' hotel.id %}" class="btn btn-primary btn-sm">Know More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="more-link-container">
+            <a href="{% url 'all_hotels' %}" class="more-link">All Hotels</a>
+        </div>
     </div>
-    <small>
-        <a href="{% url 'all_hotels' %}" class="more">All Hotels</a>
-    </small>
 </section>
 
 

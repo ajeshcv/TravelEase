@@ -1,240 +1,548 @@
+{% extends 'travel/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Website</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'travel/images/touring.png' %}" />
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
+{% block title %}My Profile - TravelEase{% endblock %}
 
-        #profile {
-            max-width: 800px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+{% block extra_css %}
+<style>
+/* ============================================
+   MODERN USER PROFILE
+   Premium profile layout
+   ============================================ */
 
-        #profile h2 {
-            text-align: center;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
+.profile-page {
+    min-height: 100vh;
+    padding-top: 80px;
+    background: var(--gray-50);
+}
 
-        #profile h3 {
-            margin-top: 30px;
-            color: #555;
-        }
+.profile-header {
+    background: linear-gradient(135deg, var(--primary-800), var(--primary-600));
+    padding: var(--space-16) var(--space-6);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        #profile p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
+.profile-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+}
 
-        #profile p strong {
-            color: #555;
-        }
+.profile-avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: var(--space-4);
+}
 
-        #profile img {
-            display: block;
-        width: 180px;
-        height: 180px;
-        border-radius: 60px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease; 
-        margin-bottom: 20px;
-        }
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: var(--shadow-xl);
+}
 
-        #profile .btn-one {
-            display: inline-block;
-            text-align: center;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
+.profile-avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    background: var(--primary-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    border: 4px solid white;
+    box-shadow: var(--shadow-xl);
+}
 
-        #profile .btn-one:hover {
-            background-color: #0056b3;
-        }
+.profile-name {
+    font-size: 1.75rem;
+    color: white;
+    margin-bottom: var(--space-2);
+}
 
-        #profile form {
-            text-align: center;
-            margin-top: 20px;
-        }
+.profile-email {
+    color: var(--primary-100);
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-4);
+}
 
-        #profile form button {
-            background-color: #d9534f;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.profile-actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-        #profile form button:hover {
-            background-color: #c9302c;
-        }
+.profile-actions .btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+}
 
-      
-    #profile table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
+.btn-upload {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-upload:hover {
+    background: rgba(255,255,255,0.3);
+    color: white;
+}
+
+.profile-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-8);
+}
+
+/* Sidebar */
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.sidebar-card {
+    background: white;
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+}
+
+.sidebar-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-500);
+    margin-bottom: var(--space-4);
+}
+
+.sidebar-card .info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+}
+
+.sidebar-card .info-item i {
+    width: 20px;
+    color: var(--primary-600);
+}
+
+.sidebar-card .info-item span {
+    font-size: 0.9375rem;
+    color: var(--gray-700);
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    color: var(--gray-600);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
+    background: var(--primary-50);
+    color: var(--primary-600);
+}
+
+.sidebar-nav a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+.profile-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.main-card {
+    background: white;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header h2 {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.card-body {
+    padding: var(--space-6);
+}
+
+/* Bookings Table */
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bookings-table thead th {
+    text-align: left;
+    padding: var(--space-3);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-500);
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.bookings-table tbody td {
+    padding: var(--space-3);
+    font-size: 0.9375rem;
+    color: var(--gray-700);
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.bookings-table tbody tr:hover {
+    background: var(--gray-50);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-transform: capitalize;
+}
+
+.status-badge.accepted {
+    background: var(--success-light);
+    color: #065f46;
+}
+
+.status-badge.pending {
+    background: var(--warning-light);
+    color: #92400e;
+}
+
+.status-badge.rejected {
+    background: var(--error-light);
+    color: #991b1b;
+}
+
+.payment-badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+}
+
+.payment-badge.paid {
+    background: var(--success-light);
+    color: #065f46;
+}
+
+.payment-badge.pending {
+    background: var(--warning-light);
+    color: #92400e;
+}
+
+.pay-btn {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    background: var(--success);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.pay-btn:hover {
+    background: #059669;
+    color: white;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--space-12);
+    color: var(--gray-500);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    color: var(--gray-300);
+    margin-bottom: var(--space-4);
+}
+
+.empty-state h4 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--gray-600);
+    margin-bottom: var(--space-2);
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+}
+
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--gray-50);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-fast);
+}
+
+.quick-action:hover {
+    background: var(--primary-50);
+    transform: translateY(-2px);
+}
+
+.quick-action i {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-100);
+    color: var(--primary-600);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-action span {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .profile-content {
+        grid-template-columns: 1fr;
     }
-
-    #profile table thead {
-        background-color: #007bff;
-        color: white;
-    }
-
-    #profile table th, #profile table td {
-        padding: 12px 15px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
-
-    #profile table th {
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 14px;
-    }
-
-    #profile table tbody tr {
-        background-color: #f9f9f9;
-        transition: background-color 0.3s ease;
-    }
-
-    #profile table tbody tr:nth-child(even) {
-        background-color: #f1f1f1;
-    }
-
-    #profile table tbody tr:hover {
-        background-color: #f0f8ff;
-    }
-
-    #profile table tbody td {
-        font-size: 14px;
-        color: #555;
-    }
-    .button-group {
-            display: flex;
-            align-items: center; 
-            gap: 10px; 
-            margin-left: -20px;
-        }
-
-        .button-group > * { 
-          
-        }
-
-        .button-group form button {
-            margin-left: 20px;
-        }
-
     
-    </style>
-</head>
-<body>
-    <section id="profile">
-        <h2>Welcome, {{ user.username }}!</h2>
-        <p>Email: {{ user.email }}</p>
+    .profile-sidebar {
+        order: 2;
+    }
+}
 
-        {% if profile %}
-            <h3>Your Profile Details</h3>
+@media (max-width: 768px) {
+    .bookings-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-avatar-container">
             {% if profile.profile_image %}
-                <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-avatar">
+            {% else %}
+                <div class="profile-avatar-placeholder">
+                    {{ user.username|first|upper }}
+                </div>
             {% endif %}
-            <p>Name: {{ profile.name }}</p>
-            <p>Location: {{ profile.location }}</p>
-            <p>Quote: {{ profile.other_details }}</p>
+        </div>
+        <h1 class="profile-name">{{ profile.name|default:user.username }}</h1>
+        <p class="profile-email">{{ user.email }}</p>
+        <div class="profile-actions">
+            <form method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}" style="display: inline;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-upload">
+                    <i class="fa fa-upload"></i> Upload Photo
+                </button>
+            </form>
+            <a href="{% url 'edit_customer_profile' %}" class="btn btn-upload">
+                <i class="fa fa-edit"></i> Edit Profile
+            </a>
+        </div>
+    </div>
 
-            <div class="button-group">
-                <form method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button style="margin-top: 0px;" type="submit" class="btn-one">Upload Images</button>
-                </form>
-                <a href="{% url 'my_chats' %}" class="btn-one">My Chats</a>
-                <a href="{% url 'write_review' %}" class="btn-one">Write a Review</a>
-                {% if profile %}
-                    <a href="{% url 'edit_customer_profile' %}" class="btn-one">Edit Your Profile</a>
-                {% else %}
-                    <a href="{% url 'create_customer_profile' %}" class="btn-one">Create Your Profile</a>
+    <!-- Profile Content -->
+    <div class="profile-content">
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+            {% if profile %}
+            <div class="sidebar-card">
+                <h3>Profile Details</h3>
+                <div class="info-item">
+                    <i class="fa fa-user"></i>
+                    <span>{{ profile.name }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa fa-map-marker-alt"></i>
+                    <span>{{ profile.location|default:"Not set" }}</span>
+                </div>
+                {% if profile.other_details %}
+                <div class="info-item">
+                    <i class="fa fa-quote-left"></i>
+                    <span>{{ profile.other_details|truncatewords:10 }}</span>
+                </div>
                 {% endif %}
             </div>
             {% endif %}
-        <h2>Your Bookings</h2>
-        {% if bookings %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Package</th>
-                        <th>Packager</th>
-                        <th>Travel Date</th>
-                        <th>Number of Travelers</th>
-                        <th>Status</th>
-                        <th>Total Price</th>
-                        <th>Payment Status</th> 
-                </thead>
-                <tbody>
-                    {% for booking in bookings %}
-                        <tr>
-                            <td>{{ booking.package.name }}</td>
-                            <td>{{ booking.package.packager.username }}</td>
-                            <td>{{ booking.travel_date }}</td>
-                            <td>{{ booking.num_travelers }}</td>
-                            <td>{{ booking.status }}</td>
-                            <td>{{ booking.total_price }}</td>
-                            <td>
-                                {% if booking.payment_link and booking.status == 'accepted' and booking.payment_status == 'pending' %}  {# Only show link if accepted and payment pending #}
-                                <a href="/pay/{{ booking.id }}/">Pay Now</a>  {# No token! #}
-                                {% elif booking.payment_status == 'paid' %}
-                                    Paid
-                                {% else %}
-                                    pending
-                                {% endif %}
-                            </td>
-                            
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No bookings yet.</p>
-        {% endif %}
 
-        
+            <div class="sidebar-card">
+                <h3>Quick Links</h3>
+                <nav class="sidebar-nav">
+                    <a href="{% url 'user_profile' %}" class="active">
+                        <i class="fa fa-user"></i> My Profile
+                    </a>
+                    <a href="{% url 'my_chats' %}">
+                        <i class="fa fa-comments"></i> My Chats
+                    </a>
+                    <a href="{% url 'write_review' %}">
+                        <i class="fa fa-star"></i> Write Review
+                    </a>
+                    <a href="{% url 'ask_faq' %}">
+                        <i class="fa fa-question-circle"></i> Ask Question
+                    </a>
+                    <a href="{% url 'view_faqs' %}">
+                        <i class="fa fa-list"></i> My FAQs
+                    </a>
+                    <a href="{% url 'change_password' %}">
+                        <i class="fa fa-lock"></i> Change Password
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </a>
+                </nav>
+            </div>
+        </aside>
 
-        
-        <a href="{% url 'ask_faq' %}" class="btn-one">Ask a Question</a>
-        <a href="{% url 'view_faqs' %}" class="btn-one">View My FAQs</a>
+        <!-- Main Content -->
+        <main class="profile-main">
+            <!-- Bookings Card -->
+            <div class="main-card">
+                <div class="card-header">
+                    <h2><i class="fa fa-calendar-check"></i> My Bookings</h2>
+                </div>
+                <div class="card-body">
+                    {% if bookings %}
+                        <table class="bookings-table">
+                            <thead>
+                                <tr>
+                                    <th>Package</th>
+                                    <th>Packager</th>
+                                    <th>Travel Date</th>
+                                    <th>Travelers</th>
+                                    <th>Status</th>
+                                    <th>Price</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in bookings %}
+                                    <tr>
+                                        <td><strong>{{ booking.package.name }}</strong></td>
+                                        <td>{{ booking.package.packager.username }}</td>
+                                        <td>{{ booking.travel_date|date:"M j, Y" }}</td>
+                                        <td>{{ booking.num_travelers }}</td>
+                                        <td>
+                                            <span class="status-badge {{ booking.status }}">{{ booking.status }}</span>
+                                        </td>
+                                        <td>₹{{ booking.total_price }}</td>
+                                        <td>
+                                            {% if booking.payment_link and booking.status == 'accepted' and booking.payment_status == 'pending' %}
+                                                <a href="/pay/{{ booking.id }}/" class="pay-btn">Pay Now</a>
+                                            {% elif booking.payment_status == 'paid' %}
+                                                <span class="payment-badge paid">Paid</span>
+                                            {% else %}
+                                                <span class="payment-badge pending">Pending</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="empty-state">
+                            <i class="fa fa-suitcase"></i>
+                            <h4>No Bookings Yet</h4>
+                            <p>You haven't made any bookings. Start exploring our packages!</p>
+                            <a href="{% url 'all_packages' %}" class="btn btn-primary" style="margin-top: var(--space-4);">
+                                Browse Packages
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
 
-        
-        <a href="{% url 'home' %}" class="btn-one">Go Back to Home</a>
-        <a href="{% url 'change_password' %}" class="btn-one">Change Password</a>
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn-one" style="background: red;">Log Out</button>
-        </form>
-
-    </section>
-    </section>
-</body>
-</html>
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <a href="{% url 'write_review' %}" class="quick-action">
+                    <i class="fa fa-star"></i>
+                    <span>Write a Review</span>
+                </a>
+                <a href="{% url 'ask_faq' %}" class="quick-action">
+                    <i class="fa fa-question-circle"></i>
+                    <span>Ask a Question</span>
+                </a>
+                <a href="{% url 'view_faqs' %}" class="quick-action">
+                    <i class="fa fa-list"></i>
+                    <span>View My FAQs</span>
+                </a>
+                <a href="{% url 'all_packages' %}" class="quick-action">
+                    <i class="fa fa-search"></i>
+                    <span>Browse Packages</span>
+                </a>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
