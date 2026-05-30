@@ -516,10 +516,16 @@ function performSearch() {
 
     const searchTerm = searchInput.value.toLowerCase().trim();
 
-    // Critical: never hide cards when query is empty
-    if (!searchTerm) return;
-
+    // If query is empty, restore all cards (home/all-packages must still show)
     const packageCards = document.querySelectorAll('.package-card');
+    if (!searchTerm) {
+        packageCards.forEach(card => {
+            card.style.display = '';
+            card.style.animation = '';
+        });
+        return;
+    }
+
     packageCards.forEach(card => {
         const nameEl = card.querySelector('h3');
         const name = (nameEl?.textContent || '').toLowerCase();

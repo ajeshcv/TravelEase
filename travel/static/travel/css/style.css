@@ -2412,10 +2412,19 @@ section.placeContent div.right .contact a {
     transition: all 0.6s ease;
 }
 
+/* Package cards must be visible even if reveal classes aren’t toggled on some pages */
+.packages .scroll-reveal,
+.package-grid .scroll-reveal,
+.package-card.scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
 .scroll-reveal.revealed {
     opacity: 1;
     transform: translateY(0);
 }
+
 
 /* ============================================
    RESPONSIVE ADJUSTMENTS
